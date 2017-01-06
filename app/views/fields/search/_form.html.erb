@@ -14,13 +14,95 @@ and is augmented with [Selectize].
 [1]: http://www.rubydoc.info/gems/administrate/Administrate/Field/HasMany
 [Selectize]: http://brianreavis.github.io/selectize.js
 %>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<style type="text/css">
+  #v-search {
+    position: relative;
+  }
+  
+  #v-search .lists {
+    position: absolute;
+    height: auto;
+    background-color: #fff;
+    width: 100%;
+    border: solid 1px #eee;
+    padding: 1rem;
+  }
 
+  .lists span{
+    color: blue;
+    font-size: 14px;
+  }
+
+</style>
 <div class="field-unit__label">
   <%= f.label field.attribute_key, field.attribute %>
 </div>
 <div class="field-unit__field">
-  <span>1 Image found</span><br/>
-  <%= f.select(field.attribute_key, nil, {}, multiple: true) do %>
-    <%= options_for_select(field.associated_resource_options, field.selected_options) %>
-  <% end %>
+  <span>Please save Venue to add custom images</span>
+  <div id="v-search" style="display: none">
+    <button>Upload</button>
+    <input v-model="message" placeholder="edit me" v-on:change="newSearch">
+    <ul class="lists">
+      <li v-for="item in results"><span v-on:click="doSelect(item)">{{ item.title}}</span></li>
+    </ul>
+  </div>
+  <div id="v-searches"></div>
 </div>
+
+<script type="text/x-template" id="v-input">
+  <div class="v-search">
+    <input v-model="message" placeholder="edit me">
+  </div>
+</script>
+
+<script type="text/javascript">
+
+var Searches = new Vue({});
+
+var data = { 
+  message: null,
+  results: []
+}
+  
+/**
+ *
+ * @param latlon lat and lon seperated by comma
+ */
+function loadResults(q){
+  $.ajax({
+      url:'/api/v2/misc/venue_search',
+      data:{
+        q: q
+      },
+      success:function(data) {
+        Searches.$emit('resultLoaded', data);
+      }
+  });
+}
+
+new Vue({
+  el: '#v-searchs',
+  data: {
+    message: null,
+    results: [],
+  },
+  mounted() {
+    Searches.$on('resultLoaded', (data) => {
+      this.results = data;
+    });
+  },
+  methods: {
+    newSearch: function(e){
+      loadResults(e.target.value);
+    },
+    searchItems: function(e){
+      loadResults(e.target.value);
+    },
+    doSelect: function(e){
+      console.log(e);
+    }
+  }
+});
+
+</script>
