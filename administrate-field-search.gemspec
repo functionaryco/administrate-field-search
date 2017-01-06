@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.name = "administrate-field-search"
   gem.version = Administrate::Field::Search::VERSION
   gem.authors = ["Muneef Hameed", "Febil VA"]
-  gem.email = ["febil@aurut.com"]
+  gem.email = ["muneef@aurut.com", "febil@aurut.com"]
   gem.homepage = "https://github.com/byaurut/administrate_field_search"
   gem.summary = "Search field plugin for Administrate"
   gem.description = gem.summary
