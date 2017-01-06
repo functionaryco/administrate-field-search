@@ -1,10 +1,8 @@
 $:.push File.expand_path("../lib", __FILE__)
 
-require "administrate/field/search"
-
 Gem::Specification.new do |gem|
   gem.name = "administrate-field-search"
-  gem.version = Administrate::Field::Search::VERSION
+  gem.version = "0.0.1"
   gem.authors = ["Muneef Hameed", "Febil VA"]
   gem.email = ["muneef@aurut.com", "febil@aurut.com"]
   gem.homepage = "https://github.com/byaurut/administrate_field_search"

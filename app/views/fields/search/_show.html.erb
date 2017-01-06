@@ -12,7 +12,7 @@ from the associated resource class's dashboard.
   Contains methods to help display a table of associated resources.
 [1]: http://www.rubydoc.info/gems/administrate/Administrate/Field/HasMany
 %>
-
+<span><%= field.data.count(:all) %></span>
 <% if field.resources.any? %>
   <%= render(
     "collection",
