@@ -5,6 +5,7 @@ module Administrate
   module Field
     class Search < Associative
       DEFAULT_LIMIT = 5
+      VERSION = "0.0.1"
 
       def self.permitted_attribute(attribute)
         { "#{attribute.to_s.singularize}_ids".to_sym => [] }
@@ -52,6 +53,9 @@ module Administrate
 
       def display_candidate_resource(resource)
         associated_dashboard.display_resource(resource)
+      end
+
+      class Engine < ::Rails::Engine
       end
     end
   end
