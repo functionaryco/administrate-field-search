@@ -1,23 +1,25 @@
 <%#
-# Image Form Partial
-
-This partial renders an input element for image attributes.
-By default, the input is a text field for the image's URL.
-
+# HasMany Form Partial
+This partial renders an input element for belongs_to relationships.
+By default, the input is a collection select box
+that displays all possible records to associate with.
+The collection select box supports multiple inputs,
+and is augmented with [Selectize].
 ## Local variables:
-
 - `f`:
   A Rails form generator, used to help create the appropriate input fields.
 - `field`:
-  An instance of [Administrate::Field::Image][1].
-  A wrapper around the image url pulled from the database.
-
-[1]: http://www.rubydoc.info/gems/administrate/Administrate/Field/Image
+  An instance of [Administrate::Field::HasMany][1].
+  Contains helper methods for displaying a collection select box.
+[1]: http://www.rubydoc.info/gems/administrate/Administrate/Field/HasMany
+[Selectize]: http://brianreavis.github.io/selectize.js
 %>
 
 <div class="field-unit__label">
-  <%= f.label field.attribute %>
+  <%= f.label field.attribute_key, field.attribute %>
 </div>
 <div class="field-unit__field">
-  <%= f.text_field field.attribute %>
+  <%= f.select(field.attribute_key, nil, {}, multiple: true) do %>
+    <%= options_for_select(field.associated_resource_options, field.selected_options) %>
+  <% end %>
 </div>
